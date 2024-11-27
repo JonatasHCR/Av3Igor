@@ -35,6 +35,9 @@ PROJECT_ROOT = os.path.dirname(__file__)
 
 sys.path.insert(0,os.path.join(PROJECT_ROOT, '../apps'))
 
+#configurando permissões
+ROLEPERMISSIONS_MODULE = 'config.roles'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
     'home',
     'login',
     'cadastro',
+    'rolepermissions',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +141,9 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#configurando url de login 
+LOGIN_URL = '/login'
+
+#configurando a permissão de redirecionar para tela de login
+ROLEPERMISSIONS_REDIRECT_TO_LOGIN = True
