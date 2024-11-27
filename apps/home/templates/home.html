@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if msg %}
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <div>
+                          {{msg}}
+                        </div>
+                      </div>
+                    {% endif %}
+    
+    <a href="{% url "logout" %}">sair</a>
+</body>
+</html>
