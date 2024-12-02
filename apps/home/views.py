@@ -37,6 +37,7 @@ def home(request):
     
     return render(request,'home.html',{"dados": banco.to_dict(orient='records')})
 
+#pesquisa pelo objetivo
 @login_required
 def home_objetivo(request):
     tradutor = GoogleTranslator(source='en', target='pt')
