@@ -47,19 +47,13 @@
 </style>
 <!-- Sidebar -->
 <div class="sidebar d-flex flex-column p-3" style="width: 250px;">
-    <h3 class="text-center mb-4">Meu Dashboard</h3>
+    <h3 class="text-center mb-4">Analise</h3>
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="#">Relatório 1</a>
+            <a class="nav-link" href="{% url "home" %}">Pesquisa pelo País</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Relatório 2</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Relatório 3</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Configurações</a>
+            <a class="nav-link" href="{% url "objetivo" %}">Pesquisa Pelo Objetivo</a>
         </li>
     </ul>
 </div>
@@ -67,33 +61,63 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Logo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Página 1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Página 2</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Página 3</a>
-                </li>
-            </ul>
-        </div>
+        <a class="navbar-brand" href="{% url "home" %}">HOME</a>
     </div>
 </nav>
 
 <!-- Content -->
 <div class="content">
-    <div class="report">
-        <h2>Relatório 1</h2>
-        <p>Aqui você pode visualizar os gráficos e dados do relatório.</p>
-        <!-- Adicione seus gráficos aqui -->
-    </div>
+        {% if msg %}
+            <p>{{msg}}</p>
+        {% endif %}
+        {% if dados %}
+            <h2>Países</h2>
+            {% if obj %}
+            <p>Esses são os países que tem esse objetivo, você pode ver outros objetivos que o país tem</p>
+            {% else %}
+            <p>Escolha um País e veja seus objetivos</p>
+            {% endif %}
+            <form action="{% url "home" %}" class="row g-3" method="post">
+                {% csrf_token %}
+            {% for dado in dados %}
+            <hr>
+            <div class="report">
+            <div class="col-auto">
+                <label for="staticEmail2" class="visually-hidden">Pais</label>
+                <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="{{dado.geoAreaName}}">
+              </div>
+              <div class="col-sm-10">
+                <button type="submit" value="{{dado.geoAreaCode}}" name="botao" class="btn btn-info">Informe-se</button>
+              </div>
+            </div>
+           
+            {% endfor %}
+            </form>
+        {% elif dados_area %}
+        <h2>OBJETIVOS</h2>
+        
+        {% if obj %}
+        <p>Veja quais países que tem esses objetivos.</p>
+        {% else %}
+        <p>Veja os objetivos que esse país tem.</p>
+        {% endif %}
+        {% for dado in dados_area %}
+        <hr>
+        <div class="report">
+            <h3>titulo: {{dado.title}}</h3>
+            <p>{{dado.description}}</p>
+            {% if obj %}
+            <form action="{% url "objetivo" %}" class="row g-3" method="post">
+                {% csrf_token %}
+            <div class="col-sm-10">
+                <button type="submit" value="{{dado.code}}" name="botao" class="btn btn-info">Informe-se</button>
+              </div>
+            </form>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock body %}
