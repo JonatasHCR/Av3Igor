@@ -74,37 +74,8 @@
         {% if msg %}
             <p>{{msg}}</p>
         {% endif %}
-        {% if dados %}
-            <h2>Países</h2>
-            {% if obj %}
-            <p>Esses são os países que tem esse objetivo, você pode ver outros objetivos que o país tem</p>
-            {% else %}
-            <p>Escolha um País e veja seus objetivos</p>
-            {% endif %}
-            
-            {% for dado in dados %}
-            <form action="{% url "home" %}" class="row g-3" method="post">
-                {% csrf_token %}
-            <hr>
-            <div class="report">
-            <div class="col-auto">
-                <label for="staticEmail2" class="visually-hidden">Pais</label>
-                <input type="text" readonly class="form-control-plaintext" name="nome" id="staticEmail2" value="{{dado.geoAreaName}}">
-              </div>
-              <div class="col-sm-10">
-                <button type="submit" class="btn btn-info">Informe-se</button>
-              </div>
-            </div>
-        </form>
-            {% endfor %}
-            
-        {% elif dados_area %}
-        
-        {% if nome %}
-        <h2>{{nome}}</h2>
-        {% else %}
+        {% if dados_area %}
         <h2>Gráficos</h2>
-        {% endif %}
         <p>Veja os gráficos de cada objetivo, analisando o percentual de quantos países adotam aquele objetivo e quantos não adotam</p>
         {% for dado,img in dados_area %}
         <hr>
