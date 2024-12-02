@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load static %}
+{% load filtros %}
 {% block body %}
 <style>
     body {
@@ -103,29 +104,16 @@
         {% if nome %}
         <h2>{{nome}}</h2>
         {% else %}
-        <h2>OBJETIVOS</h2>
+        <h2>Gráficos</h2>
         {% endif %}
-        
-        {% if obj %}
-        <p>Veja quais países que tem esses objetivos.</p>
-        {% else %}
-        <p>Veja os objetivos que esse país tem.</p>
-        {% endif %}
-        {% if img %}
-                <img src="{% static img %}" alt="gráfico dos objetivos do {{nome}}">
-            {% endif %}
-        {% for dado in dados_area %}
+        <p>Veja os gráficos de cada objetivo, analisando o percentual de quantos países adotam aquele objetivo e quantos não adotam</p>
+        {% for dado,img in dados_area %}
         <hr>
         <div class="report">
             <h3>Objetivo: {{dado.title}}</h3>
             <p>{{dado.description}}</p>
-            {% if obj %}
-            <form action="{% url "objetivo" %}" class="row g-3" method="post">
-                {% csrf_token %}
-            <div class="col-sm-10">
-                <button type="submit" value="{{dado.code}}" name="botao" class="btn btn-info">Informe-se</button>
-              </div>
-            </form>
+            {% if img %}
+                <img src="{% static img %}" alt="grafico do objetivo {{forloop.counter}}">
             {% endif %}
         </div>
         {% endfor %}
