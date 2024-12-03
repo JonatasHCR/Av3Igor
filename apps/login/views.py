@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def entrar(request):
     if request.method == 'POST':
-        username = request.POST.get('usuario')
+        email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(username = username, password = password)
+        user = authenticate(username = email, password = password)
         if user is not None:
             login(request,user)
             return redirect('home')

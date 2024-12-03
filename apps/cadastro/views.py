@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 # Create your views here.
 def cadastro(request):
     if request.method == 'POST':
-        username = request.POST.get('usuario')
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(username=email)
             
         except User.DoesNotExist:
-            user = User.objects.create_user(username=username, password=password)
+            user = User.objects.create_user(username= email,email=email, password=password)
             user.save()
        
             return redirect('login')
